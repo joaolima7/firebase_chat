@@ -1,18 +1,70 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:lottie/lottie.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  late Timer _timer;
+  bool _showFirstAnimation = true;
+  bool _isLogged = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      setState(() {
+        _showFirstAnimation = !_showFirstAnimation;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      // headerWidget: Center(
-      //   child: Image.asset(
-      //     'assets/images/chat.png',
-      //     height: 50,
-      //   ),
-      // ),
+      headerWidget: _isLogged
+          ? null
+          : Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Ajusta o tamanho da coluna ao conteúdo
+                children: [
+                  AnimatedSwitcher(
+                    duration: const Duration(seconds: 1),
+                    transitionBuilder: (Widget child, Animation<double> animation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                    child: _showFirstAnimation
+                        ? Lottie.asset(
+                            'assets/animations/chat_message.json',
+                            key: const ValueKey('chat_message'),
+                            height: MediaQuery.of(context).size.height * .15,
+                          )
+                        : Lottie.asset(
+                            'assets/animations/message_person.json',
+                            key: const ValueKey('message_person'),
+                            height: MediaQuery.of(context).size.height * .15,
+                          ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+      loginAfterSignUp: false,
       userValidator: (value) {
         if (!(value!.contains('@'))) {
           return 'E-mail inválido.';
@@ -43,7 +95,12 @@ class AuthScreen extends StatelessWidget {
       onSignup: (data) {
         return null;
       },
-      onSubmitAnimationCompleted: () {},
+      onSubmitAnimationCompleted: () {
+        setState(() {
+          _isLogged = true;
+        });
+        Navigator.pushNamedAndRemoveUntil(context, '/chat', (route) => false);
+      },
       messages: LoginMessages(
         signUpSuccess: 'Conta Criada com Sucesso!',
         passwordHint: 'Senha',
@@ -69,13 +126,15 @@ class AuthScreen extends StatelessWidget {
           letterSpacing: 4,
         ),
         inputTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        )),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
         buttonTheme: LoginButtonTheme(
-            shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        )),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
         buttonStyle: const TextStyle(
           fontWeight: FontWeight.w400,
         ),
