@@ -121,6 +121,9 @@ class _AuthScreenState extends State<AuthScreen> {
         resendCodeSuccess: 'Um novo e-mail foi enviado.',
       ),
       theme: LoginTheme(
+        cardTheme: const CardTheme(
+          color: Colors.white38,
+        ),
         titleStyle: const TextStyle(
           fontWeight: FontWeight.w200,
           letterSpacing: 4,
@@ -131,6 +134,7 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         ),
         buttonTheme: LoginButtonTheme(
+          backgroundColor: Colors.orange.shade500,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -138,9 +142,10 @@ class _AuthScreenState extends State<AuthScreen> {
         buttonStyle: const TextStyle(
           fontWeight: FontWeight.w400,
         ),
-        pageColorLight: Colors.white,
+        pageColorLight: Colors.white70,
         primaryColor: Colors.orange.shade300,
         errorColor: Colors.red.shade300,
+        pageColorDark: Colors.black87,
       ),
     );
   }

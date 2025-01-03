@@ -1,3 +1,4 @@
+import 'package:firebase_chat/src/features/chat/presentation/view/chat_page.dart';
 import 'package:firebase_chat/src/features/chat/presentation/view/chat_screen.dart';
 import 'package:firebase_chat/src/features/auth/presentation/view/auth_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => const AuthScreen(),
-        '/chat': (context) => const ChatScreen(),
+        '/chat': (context) => const ChatPage(),
       },
     );
   }

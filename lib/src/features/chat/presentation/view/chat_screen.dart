@@ -66,8 +66,16 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: const Text('Chat'),
         centerTitle: true,
+        backgroundColor: neutral0,
+        foregroundColor: Colors.white,
       ),
       body: Chat(
+        showUserAvatars: true,
+        showUserNames: true,
+        theme: const DefaultChatTheme(
+          primaryColor: primary,
+          inputBackgroundColor: neutral0,
+        ),
         messages: _messages,
         onSendPressed: _handleSendPressed,
         onAttachmentPressed: _handleAttachmentPressed,
