@@ -11,13 +11,18 @@ class AuthRepositoryImp implements AuthRepository {
   final AuthDataSource _authDataSource;
 
   @override
-  Future<Either<Exception, UserEntity>> checkAccountCreated(UserEntity user) async {
-    return await _authDataSource.checkAccountCreated(user);
+  Future<Either<Exception, bool>> checkAccountCreated(String email) async {
+    return await _authDataSource.checkAccountCreated(email);
   }
 
   @override
   Future<Either<Exception, UserEntity>> login(UserEntity user) async {
     return await _authDataSource.login(user);
+  }
+
+  @override
+  Future<Either<Exception, UserEntity>> logout(UserEntity user) async {
+    return await _authDataSource.logout(user);
   }
 
   @override

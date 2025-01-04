@@ -3,7 +3,7 @@ import 'package:firebase_chat/src/features/auth/domain/entities/user.entity.dart
 
 import '../repositories/auth_repository.dart';
 
-abstract class SignUpUseCase {
+class SignUpUseCase {
   SignUpUseCase({
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
